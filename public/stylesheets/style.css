@@ -6,9 +6,6 @@ body {
 a {
   color: #00B7FF;
 }
-.viewport {
-  width: 100%;
-}
 .sentence .word {
   padding: 0 .5em 0 .5em;
 }
@@ -17,4 +14,17 @@ a {
 }
 .aligned .sentence .word {
   display: inline-block;
+}
+.rotating-sentence {
+  position: relative;
+  margin-top: 100px;
+}
+.rotating-sentence .words {
+  padding: 0 .5em 0 .5em;
+  display: inline-block;
+  height: 1.3em;
+  overflow: hidden;
+}
+.rotating-sentence .words .word {
+  display: block;
 }

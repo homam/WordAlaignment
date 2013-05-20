@@ -1,4 +1,4 @@
-var $sentences, getLeft, getWidth, highlighIndex, sentences;
+var $rsentence, $sentences, getLeft, getWidth, groups, highlighIndex, sentences;
 
 sentences = [['I', 'am', 'a', 'very', 'happy', 'person'], ['You', 'are', 'a', 'very', 'happy and joyful', 'person'], ['You and me', 'are', '', 'very', 'happy', 'co-workers']];
 
@@ -8,9 +8,11 @@ $sentences = $(".sentences");
 
 sentences = sentences.map(function(sentence) {
   var $s;
+
   $s = $('<div class="sentence"></div>').appendTo($sentences);
   return sentence.map(function(word) {
     var $w;
+
     $w = $('<span class="word"></span>').text(word).appendTo($s);
     return {
       word: word,
@@ -29,6 +31,7 @@ getWidth = function(index) {
 
 getLeft = function(index) {
   var _i, _ref, _results;
+
   if (0 === index) {
     return 0;
   } else {
@@ -44,9 +47,21 @@ getLeft = function(index) {
   }
 };
 
+groups = [];
+
 sentences.forEach(function(sentence, i) {
   return sentence.forEach(function(word, j) {
-    console.log(word.word, getLeft(j));
+    if (!groups[j]) {
+      groups[j] = {
+        words: [word.word],
+        pos: {
+          width: getWidth(j),
+          left: getLeft(j)
+        }
+      };
+    } else {
+      groups[j].words.push(word.word);
+    }
     return word.element.css({
       'left': getLeft(j),
       'width': getWidth(j)
@@ -55,3 +70,18 @@ sentences.forEach(function(sentence, i) {
 });
 
 $sentences.addClass("aligned");
+
+$rsentence = $(".rotating-sentence");
+
+groups.forEach(function(g) {
+  var $ws;
+
+  $ws = $('<span class="words"></span>').css({
+    'left': g.pos.left,
+    'width': g.pos.width
+  });
+  $rsentence.append($ws);
+  return g.words.forEach(function(w) {
+    return $ws.append($('<span class="word"></span>').text(w));
+  });
+});
