@@ -1,0 +1,20 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: silver;
+}
+a {
+  color: #00B7FF;
+}
+.viewport {
+  width: 100%;
+}
+.sentence .word {
+  padding: 0 .5em 0 .5em;
+}
+.aligned .sentence {
+  position: relative;
+}
+.aligned .sentence .word {
+  display: inline-block;
+}
