@@ -1,7 +1,10 @@
 sentences = [
-  ['I', 'am', 'a', 'very', 'happy', 'person'],
-  ['You', 'are', 'a', 'very', 'happy and joyful', 'person'],
-  ['You and me', 'are', '', 'very', 'happy', 'co-workers'],
+  ['I', 'do', 'my', 'homework'],
+  ['You', 'do', 'your', 'homework'],
+  ['She', 'does', 'her', 'homework'],
+  ['He', 'does', 'his', 'homework'],
+  ['We', 'do', 'our', 'homework'],
+  ['They', 'do', 'their', 'homework']
 ]
 
 highlighIndex = 1
@@ -32,10 +35,6 @@ sentences.forEach (sentence, i) ->
         groups[j] = {words: [word.word], pos: {width: getWidth(j), left: getLeft(j)}} 
     else 
         groups[j].words.push(word.word)
-    word.element.css {
-      #'left': getLeft(j)
-      #'width': getWidth(j)
-    }
 
 $sentences.addClass("aligned")
 
@@ -81,3 +80,10 @@ next = () ->
     $holder.prepend $holder.children().last().clone().css('top', firstTop - height)
     $holder.css "-webkit-transform", "translate3d(0, " + top + "px, 0)"
   null
+  
+Hammer(document.body).on 'swipeup', () -> next()
+Hammer(document.body).on 'swipedown', () -> back()
+
+document.ontouchmove = (e) -> e.preventDefault()
+document.body.ontouchmove = (e) -> e.preventDefault()
+document.getElementById("viewport").ontouchmove = (e) -> e.preventDefault()

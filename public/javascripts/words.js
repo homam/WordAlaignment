@@ -1,6 +1,6 @@
 var $rsentence, $sentences, back, current, getHeight, getLeft, getWidth, groups, height, highlighIndex, next, sentences;
 
-sentences = [['I', 'am', 'a', 'very', 'happy', 'person'], ['You', 'are', 'a', 'very', 'happy and joyful', 'person'], ['You and me', 'are', '', 'very', 'happy', 'co-workers']];
+sentences = [['I', 'do', 'my', 'homework'], ['You', 'do', 'your', 'homework'], ['She', 'does', 'her', 'homework'], ['He', 'does', 'his', 'homework'], ['We', 'do', 'our', 'homework'], ['They', 'do', 'their', 'homework']];
 
 highlighIndex = 1;
 
@@ -62,7 +62,7 @@ groups = [];
 sentences.forEach(function(sentence, i) {
   return sentence.forEach(function(word, j) {
     if (!groups[j]) {
-      groups[j] = {
+      return groups[j] = {
         words: [word.word],
         pos: {
           width: getWidth(j),
@@ -70,9 +70,8 @@ sentences.forEach(function(sentence, i) {
         }
       };
     } else {
-      groups[j].words.push(word.word);
+      return groups[j].words.push(word.word);
     }
-    return word.element.css({});
   });
 });
 
@@ -130,4 +129,24 @@ back = function() {
     return $holder.css("-webkit-transform", "translate3d(0, " + top + "px, 0)");
   });
   return null;
+};
+
+Hammer(document.body).on('swipeup', function() {
+  return next();
+});
+
+Hammer(document.body).on('swipedown', function() {
+  return back();
+});
+
+document.ontouchmove = function(e) {
+  return e.preventDefault();
+};
+
+document.body.ontouchmove = function(e) {
+  return e.preventDefault();
+};
+
+document.getElementById("viewport").ontouchmove = function(e) {
+  return e.preventDefault();
 };
