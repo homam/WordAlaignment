@@ -36,11 +36,28 @@ sentences.forEach (sentence, i) ->
 $sentences.addClass("aligned")
 
 $rsentence = $(".rotating-sentence");
-groups.forEach (g) ->
+groups.forEach (g, wordIndex) ->
     $ws = $('<span class="words"></span>').css {
       'left': g.pos.left
       'width': g.pos.width
     }
+    $holder = $ws.append('<span class="holder"></span>').find(".holder")
     $rsentence.append $ws
-    g.words.forEach (w) ->
-        $ws.append $('<span class="word"></span>').text(w)
+    g.words.forEach (w,i) ->
+      $holder.append $('<span class="word"></span>').text(w).attr('data-row', i).addClass(if highlighIndex == wordIndex then 'highlighted' else null)
+    $holder.prepend $holder.children().last().clone()
+
+
+
+
+current = 1;
+next = () ->
+  $(".words").each () ->
+    $ws = $(this)
+    $ws.children().first().remove()
+    $ws.append $ws.children().first().clone()
+  current++;
+  top = current*-100
+  console.log "translate3d(0, " + top + "%, 0)"
+  $rsentence.find(".word").css "-webkit-transform", "translate3d(0, " + top + "%, 0)"
+  null

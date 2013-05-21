@@ -8,6 +8,7 @@ a {
 }
 .sentence .word {
   padding: 0 .5em 0 .5em;
+  float: left;
 }
 .aligned .sentence {
   position: relative;
@@ -24,7 +25,15 @@ a {
   display: inline-block;
   height: 1.3em;
   overflow: hidden;
+  outline: solid 1px black;
 }
 .rotating-sentence .words .word {
   display: block;
+  -webkit-transition: 1s;
+  height: 1.3em;
+}
+.rotating-sentence .words .word.highlighted {
+  -webkit-transition: .5s;
+  background-color: #fff967;
+  text-align: center;
 }

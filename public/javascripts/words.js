@@ -1,4 +1,4 @@
-var $rsentence, $sentences, getLeft, getWidth, groups, highlighIndex, sentences;
+var $rsentence, $sentences, current, getLeft, getWidth, groups, highlighIndex, next, sentences;
 
 sentences = [['I', 'am', 'a', 'very', 'happy', 'person'], ['You', 'are', 'a', 'very', 'happy and joyful', 'person'], ['You and me', 'are', '', 'very', 'happy', 'co-workers']];
 
@@ -8,11 +8,9 @@ $sentences = $(".sentences");
 
 sentences = sentences.map(function(sentence) {
   var $s;
-
   $s = $('<div class="sentence"></div>').appendTo($sentences);
   return sentence.map(function(word) {
     var $w;
-
     $w = $('<span class="word"></span>').text(word).appendTo($s);
     return {
       word: word,
@@ -31,7 +29,6 @@ getWidth = function(index) {
 
 getLeft = function(index) {
   var _i, _ref, _results;
-
   if (0 === index) {
     return 0;
   } else {
@@ -73,15 +70,33 @@ $sentences.addClass("aligned");
 
 $rsentence = $(".rotating-sentence");
 
-groups.forEach(function(g) {
-  var $ws;
-
+groups.forEach(function(g, wordIndex) {
+  var $holder, $ws;
   $ws = $('<span class="words"></span>').css({
     'left': g.pos.left,
     'width': g.pos.width
   });
+  $holder = $ws.append('<span class="holder"></span>').find(".holder");
   $rsentence.append($ws);
-  return g.words.forEach(function(w) {
-    return $ws.append($('<span class="word"></span>').text(w));
+  g.words.forEach(function(w, i) {
+    return $holder.append($('<span class="word"></span>').text(w).attr('data-row', i).addClass(highlighIndex === wordIndex ? 'highlighted' : null));
   });
+  return $holder.prepend($holder.children().last().clone());
 });
+
+current = 1;
+
+next = function() {
+  var top;
+  $(".words").each(function() {
+    var $ws;
+    $ws = $(this);
+    $ws.children().first().remove();
+    return $ws.append($ws.children().first().clone());
+  });
+  current++;
+  top = current * -100;
+  console.log("translate3d(0, " + top + "%, 0)");
+  $rsentence.find(".word").css("-webkit-transform", "translate3d(0, " + top + "%, 0)");
+  return null;
+};
