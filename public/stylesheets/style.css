@@ -27,12 +27,19 @@ a {
   overflow: hidden;
   outline: solid 1px black;
 }
-.rotating-sentence .words .word {
+.rotating-sentence .words .holder {
+  -webkit-transform: translate3d(0, 0, 0);
+  position: relative;
   display: block;
   -webkit-transition: 1s;
-  height: 1.3em;
 }
-.rotating-sentence .words .word.highlighted {
+.rotating-sentence .words .holder .word {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.rotating-sentence .words .holder .word.highlighted {
   -webkit-transition: .5s;
   background-color: #fff967;
   text-align: center;

@@ -39,18 +39,24 @@ a {
         outline: solid 1px black;
 
         .holder {
-          -webkit-transform:translate3d(0,-100%,0);
-        }
-        .word {
-          display:block;
-          -webkit-transition: 1s;
-          height: 1.3em;
-          &.highlighted {
-            -webkit-transition: .5s;
-            background-color: #fff967;
-            text-align: center;
-          }
+            -webkit-transform:translate3d(0,0,0);
+            position: relative;
+            display: block;
+            //todo set the height
+            -webkit-transition: 1s;
+            
+            .word {
+              display:block;
+              //todo set the height
+              //todo set the top
+              position: absolute;
+              left:0;right:0;
+              &.highlighted {
+                -webkit-transition: .5s;
+                background-color: #fff967;
+                text-align: center;
+              }
+            }
         }
     }
-
 } 
