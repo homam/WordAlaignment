@@ -103,9 +103,18 @@ next = function() {
   current++;
   top = current * -height;
   $(".words .holder").each(function() {
-    var $holder, lastTop;
+    var $current, $holder, $next, lastTop;
 
     $holder = $(this);
+    $current = $holder.find(".word:nth-child(2)");
+    $next = $current.next();
+    if ($next.text() !== $current.text()) {
+      console.log($holder.parent());
+      $holder.parent().addClass('flash');
+      setTimeout(function() {
+        return $holder.parent().removeClass('flash', 2000);
+      });
+    }
     $holder.children().first().remove();
     lastTop = parseFloat($holder.children().last().css('top'));
     $holder.append($holder.children().first().clone().css('top', lastTop + height));

@@ -64,6 +64,15 @@ next = () ->
   top = current*-height
   $(".words .holder").each () ->
     $holder = $(this)
+    
+    $current = $holder.find(".word:nth-child(2)")
+    $next = $current.next()
+    
+    if $next.text() != $current.text()
+        console.log $holder.parent()
+        $holder.parent().addClass 'flash'
+        setTimeout () -> $holder.parent().removeClass 'flash', 2000
+    
     $holder.children().first().remove()
     lastTop = parseFloat $holder.children().last().css('top')
     $holder.append $holder.children().first().clone().css('top', lastTop + height)
