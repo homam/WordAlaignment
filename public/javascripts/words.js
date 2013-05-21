@@ -1,4 +1,4 @@
-var $rsentence, $sentences, current, getHeight, getLeft, getWidth, groups, height, highlighIndex, next, sentences;
+var $rsentence, $sentences, back, current, getHeight, getLeft, getWidth, groups, height, highlighIndex, next, sentences;
 
 sentences = [['I', 'am', 'a', 'very', 'happy', 'person'], ['You', 'are', 'a', 'very', 'happy and joyful', 'person'], ['You and me', 'are', '', 'very', 'happy', 'co-workers']];
 
@@ -103,17 +103,33 @@ current = 0;
 next = function() {
   var top;
 
-  $(".words .holder").each(function() {
-    var $ws, lastTop;
-
-    $ws = $(this);
-    $ws.children().first().remove();
-    lastTop = parseFloat($ws.children().last().css('top'));
-    return $ws.append($ws.children().first().clone().css('top', lastTop + height));
-  });
   current++;
   top = current * -height;
-  console.log("translate3d(0, " + top + "%, 0)");
-  $rsentence.find(".holder").css("-webkit-transform", "translate3d(0, " + top + "px, 0)");
+  $(".words .holder").each(function() {
+    var $holder, lastTop;
+
+    $holder = $(this);
+    $holder.children().first().remove();
+    lastTop = parseFloat($holder.children().last().css('top'));
+    $holder.append($holder.children().first().clone().css('top', lastTop + height));
+    return $holder.css("-webkit-transform", "translate3d(0, " + top + "px, 0)");
+  });
+  return null;
+};
+
+back = function() {
+  var top;
+
+  current--;
+  top = current * -height;
+  $(".words .holder").each(function() {
+    var $holder, firstTop;
+
+    $holder = $(this);
+    $holder.children().last().remove();
+    firstTop = parseFloat($holder.children().first().css('top'));
+    $holder.prepend($holder.children().last().clone().css('top', firstTop - height));
+    return $holder.css("-webkit-transform", "translate3d(0, " + top + "px, 0)");
+  });
   return null;
 };

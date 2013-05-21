@@ -57,13 +57,23 @@ groups.forEach (g, wordIndex) ->
 
 current = 0;
 next = () ->
-  $(".words .holder").each () ->
-    $ws = $(this)
-    $ws.children().first().remove()
-    lastTop = parseFloat $ws.children().last().css('top')
-    $ws.append $ws.children().first().clone().css('top', lastTop + height)
-  current++;
+  current++
   top = current*-height
-  console.log "translate3d(0, " + top + "%, 0)"
-  $rsentence.find(".holder").css "-webkit-transform", "translate3d(0, " + top + "px, 0)"
+  $(".words .holder").each () ->
+    $holder = $(this)
+    $holder.children().first().remove()
+    lastTop = parseFloat $holder.children().last().css('top')
+    $holder.append $holder.children().first().clone().css('top', lastTop + height)
+    $holder.css "-webkit-transform", "translate3d(0, " + top + "px, 0)"
+  null
+  
+ back = () ->
+  current--
+  top = current*-height
+  $(".words .holder").each () ->
+    $holder = $(this)
+    $holder.children().last().remove()
+    firstTop = parseFloat $holder.children().first().css('top')
+    $holder.prepend $holder.children().last().clone().css('top', firstTop - height)
+    $holder.css "-webkit-transform", "translate3d(0, " + top + "px, 0)"
   null
