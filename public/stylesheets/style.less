@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 30px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: silver;
 }
 
@@ -14,15 +14,14 @@ a {
     padding: 0 .5em 0 .5em;
     float:left;
   }
+  clear:both;
+  border-bottom: solid 1px black;
 
-  //height: 3em;
 
   .aligned & {
     position: relative;
     .word {
-      //position: absolute;
       display: inline-block;
-      //text-align: center;
     }
   }
 }
@@ -32,11 +31,18 @@ a {
     margin-top: 100px;
     
     .words {
-        padding: 0 .5em 0 .5em;
+        padding: 0;
         display:inline-block;
-        height: 1.3em;
         overflow: hidden;
-        outline: solid 1px black;
+        //outline: solid 1px black;
+        
+        &.highlighted {
+            background-color: #fff967;
+            .holder {
+                -webkit-transition: .5s;
+                text-align: center;
+            }
+        }
 
         .holder {
             -webkit-transform:translate3d(0,0,0);
@@ -46,16 +52,12 @@ a {
             -webkit-transition: 1s;
             
             .word {
+              padding: 0 .5em;
               display:block;
               //todo set the height
               //todo set the top
               position: absolute;
               left:0;right:0;
-              &.highlighted {
-                -webkit-transition: .5s;
-                background-color: #fff967;
-                text-align: center;
-              }
             }
         }
     }

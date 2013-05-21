@@ -34,7 +34,7 @@ getWidth = function(index) {
     return sentence[index].element.outerWidth();
   })).sort(function(a, b) {
     return b - a;
-  }))[0];
+  }))[0] * 1.05;
 };
 
 getLeft = function(index) {
@@ -72,10 +72,7 @@ sentences.forEach(function(sentence, i) {
     } else {
       groups[j].words.push(word.word);
     }
-    return word.element.css({
-      'left': getLeft(j),
-      'width': getWidth(j)
-    });
+    return word.element.css({});
   });
 });
 
@@ -90,10 +87,11 @@ groups.forEach(function(g, wordIndex) {
     'left': g.pos.left,
     'width': g.pos.width
   });
+  $ws.addClass(highlighIndex === wordIndex ? 'highlighted' : null);
   $holder = $ws.append('<span class="holder"></span>').find(".holder").css('height', height).css("-webkit-transform", "translate3d(0, 0px, 0)");
   $rsentence.append($ws);
   g.words.forEach(function(w, i) {
-    return $holder.append($('<span class="word"></span>').text(w).attr('data-row', i).addClass(highlighIndex === wordIndex ? 'highlighted' : null).css('height', height).css('top', i * height));
+    return $holder.append($('<span class="word"></span>').text(w).attr('data-row', i).css('height', height).css('top', i * height));
   });
   return $holder.prepend($holder.children().last().clone().css('top', -height));
 });

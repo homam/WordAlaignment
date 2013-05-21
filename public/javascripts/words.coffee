@@ -18,11 +18,12 @@ getHeight = () ->
     (($sentences.find(".word").map () -> $(this).outerHeight()).sort (a,b) -> b-a)[0]
 
 getWidth = (index) -> (
-  (sentences.map (sentence) -> sentence[index].element.outerWidth()).sort (a,b) -> b-a)[0]
+  (sentences.map (sentence) -> sentence[index].element.outerWidth()).sort (a,b) -> b-a)[0] * 1.05 # safe
 
 getLeft = (index) -> if 0==index then 0 else ([0..index-1].map (i) -> getWidth(i)).reduce ((a,b) -> a+b), 0
 
 height = getHeight()
+
 
 groups = [];
 sentences.forEach (sentence, i) ->
@@ -32,8 +33,8 @@ sentences.forEach (sentence, i) ->
     else 
         groups[j].words.push(word.word)
     word.element.css {
-      'left': getLeft(j)
-      'width': getWidth(j)
+      #'left': getLeft(j)
+      #'width': getWidth(j)
     }
 
 $sentences.addClass("aligned")
@@ -44,11 +45,14 @@ groups.forEach (g, wordIndex) ->
       'left': g.pos.left
       'width': g.pos.width
     }
-    $holder = $ws.append('<span class="holder"></span>').find(".holder").css('height', height).css "-webkit-transform", "translate3d(0, 0px, 0)"
+    $ws.addClass(if highlighIndex == wordIndex then 'highlighted' else null)
+    $holder = $ws.append('<span class="holder"></span>').find(".holder")
+    .css('height', height).css "-webkit-transform", "translate3d(0, 0px, 0)"
+    
     $rsentence.append $ws
     g.words.forEach (w,i) ->
       $holder.append $('<span class="word"></span>').text(w)
-      .attr('data-row', i).addClass(if highlighIndex == wordIndex then 'highlighted' else null)
+      .attr('data-row', i)
       .css('height', height).css('top', i*height)
     $holder.prepend $holder.children().last().clone().css('top', -height)
 
