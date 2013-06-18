@@ -3,8 +3,8 @@ sentences = [
   ['You', 'do', 'your', 'homework'],
   ['She', 'does', 'her', 'homework'],
   ['He', 'does', 'his', 'homework'],
-  ['We', 'do', 'our', 'homework'],
-  ['They', 'do', 'their', 'homework']
+  ['We', 'do', 'our', 'homeworks'],
+  ['They', 'do', 'their', 'homeworks']
 ]
 
 highlighIndex = 1
@@ -69,9 +69,11 @@ next = () ->
     $next = $current.next()
     
     if $next.text() != $current.text()
-        console.log $holder.parent()
-        $holder.parent().addClass 'flash'
-        setTimeout () -> $holder.parent().removeClass 'flash', 2000
+        #todo: flash the parent
+        console.log $current.text(), $next.text(), $next.addClass('flash')
+        setTimeout (->
+            $next.removeClass 'flash'
+        ), 1000
     
     $holder.children().first().remove()
     lastTop = parseFloat $holder.children().last().css('top')
@@ -84,6 +86,17 @@ next = () ->
   top = current*-height
   $(".words .holder").each () ->
     $holder = $(this)
+    
+    $current = $holder.find(".word:nth-child(2)")
+    $prev = $current.prev()
+    
+    if $prev.text() != $current.text()
+        #todo: flash the parent
+        console.log $current.text(), $prev.text(), $prev.addClass('flash')
+        setTimeout (->
+            $prev.removeClass 'flash'
+        ), 1200
+    
     $holder.children().last().remove()
     firstTop = parseFloat $holder.children().first().css('top')
     $holder.prepend $holder.children().last().clone().css('top', firstTop - height)
@@ -92,7 +105,12 @@ next = () ->
   
 Hammer(document.body).on 'swipeup', () -> next()
 Hammer(document.body).on 'swipedown', () -> back()
+$(document.body).on 'keydown', (e) -> (if 38 is e.which then back() else (if 40 is e.which then next() else $.noop()))
 
 document.ontouchmove = (e) -> e.preventDefault()
 document.body.ontouchmove = (e) -> e.preventDefault()
 document.getElementById("viewport").ontouchmove = (e) -> e.preventDefault()
+
+
+# for testing js programmers:
+$(".highlighted").removeClass 'highlighted'

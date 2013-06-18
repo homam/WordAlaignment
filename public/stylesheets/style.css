@@ -14,6 +14,7 @@ body {
   right: 0;
   bottom: 0;
   overflow: hidden;
+  text-align: center;
 }
 a {
   color: #00B7FF;
@@ -34,12 +35,12 @@ a {
   display: inline-block;
 }
 .flash {
-  background-color: green;
-  color: blue;
+  background-color: #fff967;
 }
 .rotating-sentence {
   position: relative;
-  margin-top: 100px;
+  margin: 100px auto 0 auto;
+  display: inline-block;
 }
 .rotating-sentence .words {
   padding: 0;
@@ -65,4 +66,5 @@ a {
   position: absolute;
   left: 0;
   right: 0;
+  -webkit-transition: 0.8s;
 }

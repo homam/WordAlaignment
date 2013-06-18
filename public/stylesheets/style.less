@@ -11,7 +11,7 @@ body {
     position: absolute;
     top:0;left:0;right:0;bottom:0;
     overflow:hidden;
-    
+    text-align:center;
 }
 
 a {
@@ -38,13 +38,13 @@ a {
 }
 
 .flash {
-    background-color: green;
-    color: blue;
+    background-color: #fff967;
 }
 
 .rotating-sentence{
     position: relative;
-    margin-top: 100px;
+    margin: 100px auto 0 auto;
+    display:inline-block;
     
     .words {
         padding: 0;
@@ -74,6 +74,7 @@ a {
               //todo set the top
               position: absolute;
               left:0;right:0;
+              -webkit-transition: 0.8s;
             }
         }
     }

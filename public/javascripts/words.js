@@ -1,6 +1,6 @@
 var $rsentence, $sentences, back, current, getHeight, getLeft, getWidth, groups, height, highlighIndex, next, sentences;
 
-sentences = [['I', 'do', 'my', 'homework'], ['You', 'do', 'your', 'homework'], ['She', 'does', 'her', 'homework'], ['He', 'does', 'his', 'homework'], ['We', 'do', 'our', 'homework'], ['They', 'do', 'their', 'homework']];
+sentences = [['I', 'do', 'my', 'homework'], ['You', 'do', 'your', 'homework'], ['She', 'does', 'her', 'homework'], ['He', 'does', 'his', 'homework'], ['We', 'do', 'our', 'homeworks'], ['They', 'do', 'their', 'homeworks']];
 
 highlighIndex = 1;
 
@@ -109,11 +109,10 @@ next = function() {
     $current = $holder.find(".word:nth-child(2)");
     $next = $current.next();
     if ($next.text() !== $current.text()) {
-      console.log($holder.parent());
-      $holder.parent().addClass('flash');
-      setTimeout(function() {
-        return $holder.parent().removeClass('flash', 2000);
-      });
+      console.log($current.text(), $next.text(), $next.addClass('flash'));
+      setTimeout((function() {
+        return $next.removeClass('flash');
+      }), 1000);
     }
     $holder.children().first().remove();
     lastTop = parseFloat($holder.children().last().css('top'));
@@ -129,9 +128,17 @@ back = function() {
   current--;
   top = current * -height;
   $(".words .holder").each(function() {
-    var $holder, firstTop;
+    var $current, $holder, $prev, firstTop;
 
     $holder = $(this);
+    $current = $holder.find(".word:nth-child(2)");
+    $prev = $current.prev();
+    if ($prev.text() !== $current.text()) {
+      console.log($current.text(), $prev.text(), $prev.addClass('flash'));
+      setTimeout((function() {
+        return $prev.removeClass('flash');
+      }), 1200);
+    }
     $holder.children().last().remove();
     firstTop = parseFloat($holder.children().first().css('top'));
     $holder.prepend($holder.children().last().clone().css('top', firstTop - height));
@@ -148,6 +155,18 @@ Hammer(document.body).on('swipedown', function() {
   return back();
 });
 
+$(document.body).on('keydown', function(e) {
+  if (38 === e.which) {
+    return back();
+  } else {
+    if (40 === e.which) {
+      return next();
+    } else {
+      return $.noop();
+    }
+  }
+});
+
 document.ontouchmove = function(e) {
   return e.preventDefault();
 };
@@ -159,3 +178,5 @@ document.body.ontouchmove = function(e) {
 document.getElementById("viewport").ontouchmove = function(e) {
   return e.preventDefault();
 };
+
+$(".highlighted").removeClass('highlighted');
